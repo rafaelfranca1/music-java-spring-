@@ -1,11 +1,17 @@
 package br.com.alura.musics.service;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.theokanning.openai.completion.CompletionRequest;
 import com.theokanning.openai.service.OpenAiService;
 
 public class ConsultaChatGPT {
-    public static String obterDadosArtistas(String nomeArtista) {
-        OpenAiService service = new OpenAiService(System.getenv("OPENAI_APIKEY"));
+    
+    @Value("${openai.api.key}")
+    private String apiKey;
+    
+    public String obterDadosArtistas(String nomeArtista) {
+        OpenAiService service = new OpenAiService(apiKey);
 
         CompletionRequest requisicao = CompletionRequest.builder()
                 .model("gpt-3.5-turbo-instruct")
